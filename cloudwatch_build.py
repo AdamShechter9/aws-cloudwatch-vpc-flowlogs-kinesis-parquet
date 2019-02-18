@@ -1,6 +1,6 @@
 #!/bin/python3
 """
-At1Security - Adam Shechter
+At1 - Adam Shechter
 
 Script to generate resources and start CloudWatch VPC FlowLogs logging on AWS
 Automatically applies logging to ALL VPC Groups
@@ -24,7 +24,6 @@ Steps
 Based on:
 https://aws.amazon.com/blogs/big-data/analyze-and-visualize-your-vpc-network-traffic-using-amazon-kinesis-and-amazon-athena/
 
-
 NOTES:
 This solution subscribes all VPC's to single log.
 Calculate the volume of log data that will be generated.
@@ -45,6 +44,11 @@ Resources created:
      Table
   CW Logs Subscription Filter
   CW Dashboard
+
+Copyright 2019 At1 LLC
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the Software), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 """
 
 import json
@@ -187,19 +191,19 @@ def create_flow_log():
     return
 
 
-# Create S3 bucket for CloudTrail logging.
-def s3_create_bucket(bucket_name):
+# Create S3 bucket for CloudWatch logging.
+def s3_create_bucket():
     try:
         if region_name != 'us-east-1':
             response = s3_client.create_bucket(
-                Bucket=bucket_name,
+                Bucket=s3bucket_name,
                 CreateBucketConfiguration={
                     'LocationConstraint': region_name
                 },
             )
         else:
             response = s3_client.create_bucket(
-                Bucket=bucket_name,
+                Bucket=s3bucket_name,
             )
         logger.info(response)
     except Exception as e:
@@ -310,7 +314,7 @@ def create_role_kinesis() -> str:
     role_arn = response['Role']['Arn']
     try:
         with open("firehose_s3_policy.json", "r") as f:
-            role_policy = f.read().replace("{{bucketName}}", bucket_name)
+            role_policy = f.read().replace("{{bucketName}}", s3bucket_name)
     except Exception as e:
         print(e)
         logger.error(e)
@@ -432,7 +436,7 @@ def create_glue_resources():
                             "Type": "string"
                         },
                     ],
-                    'Location': 's3://' + bucket_name,
+                    'Location': 's3://' + s3bucket_name,
                     'InputFormat': 'org.apache.hadoop.mapred.TextInputFormat',
                     'OutputFormat': 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',
                     'SerdeInfo': {
@@ -456,7 +460,7 @@ def create_kinesis_delivery_stream():
             DeliveryStreamName=kinesis_stream_name,
             ExtendedS3DestinationConfiguration={
                 'RoleARN': kinesis_role_arn,
-                'BucketARN': 'arn:aws:s3:::' + bucket_name,
+                'BucketARN': 'arn:aws:s3:::' + s3bucket_name,
                 'BufferingHints': {
                     'SizeInMBs': 128,
                     'IntervalInSeconds': 300
@@ -512,7 +516,7 @@ def create_role_crawler() -> str:
     role_arn = response['Role']['Arn']
     try:
         with open("glue_crawler_service_policy.json", "r") as f:
-            role_policy = f.read().replace("{{bucketName}}", bucket_name)
+            role_policy = f.read().replace("{{bucketName}}", s3bucket_name)
     except Exception as e:
         print(e)
         logger.error(e)
@@ -542,7 +546,7 @@ def create_glue_crawler():
             Targets={
                 'S3Targets': [
                     {
-                        'Path': 's3://' + bucket_name,
+                        'Path': 's3://' + s3bucket_name,
                         'Exclusions': [
                             'string',
                         ]
@@ -608,7 +612,7 @@ if __name__ == '__main__':
     cloudwatch_vpc_iam_role_name = "flowlogs-delivery-role" + stack_name
     log_group_name = "vpc-cloudwatch-flowlogs-logs" + stack_name
     log_subscription_name = "flowlogs-subscription-filter" + stack_name
-    bucket_name = "cloudwatch-vpc-flowlogs-" + region_name + stack_name
+    s3bucket_name = "cloudwatch-vpc-flowlogs-" + region_name + stack_name
     lambda_flowlogs_kinesis_role_name = "lambda-flowlogs-kinesis-role" + stack_name
     lambda_flowlogs_kinesis_name = "lambda-flowlogs-kinesis" + stack_name
     kinesis_iam_role_name = "kinesis-to-s3-role" + stack_name
@@ -632,8 +636,8 @@ if __name__ == '__main__':
     logger.info("4. Creating VPC Flow Logs to deliver logs to CloudWatch")
     create_flow_log()
     logger.info("5. Creating S3 destination bucket for kinesis")
-    logger.info("S3 BUCKET NAME: {0}".format(bucket_name))
-    s3_create_bucket(bucket_name)
+    logger.info("S3 BUCKET NAME: {0}".format(s3bucket_name))
+    s3_create_bucket(s3bucket_name)
     logger.info("6.  Create IAM role for JSON Format Lambda")
     lambda_role_arn = create_role_lambda()
     logger.info("7.  Create Lambda for flowlogs tranformation to JSON")
