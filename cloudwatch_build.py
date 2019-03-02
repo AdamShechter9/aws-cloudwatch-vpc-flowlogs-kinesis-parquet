@@ -637,7 +637,7 @@ if __name__ == '__main__':
     create_flow_log()
     logger.info("5. Creating S3 destination bucket for kinesis")
     logger.info("S3 BUCKET NAME: {0}".format(s3bucket_name))
-    s3_create_bucket(s3bucket_name)
+    s3_create_bucket()
     logger.info("6.  Create IAM role for JSON Format Lambda")
     lambda_role_arn = create_role_lambda()
     logger.info("7.  Create Lambda for flowlogs tranformation to JSON")

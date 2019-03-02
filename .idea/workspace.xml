@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50d68f4c-e40a-47e1-be73-6848961a57d7" name="Default Changelist" comment="" />
+    <list default="true" id="50d68f4c-e40a-47e1-be73-6848961a57d7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cloudwatch_build.py" beforeDir="false" afterPath="$PROJECT_DIR$/cloudwatch_build.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +11,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cloudwatch_build.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="639" column="21" selection-start-line="639" selection-start-column="21" selection-end-line="639" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -22,6 +34,9 @@
     <findStrings>
       <find>input</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -38,11 +53,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1341" />
-    <option name="y" value="94" />
-    <option name="width" value="1580" />
-    <option name="height" value="800" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="773" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -98,19 +112,21 @@
       <workItem from="1549474953902" duration="8395000" />
       <workItem from="1549912688614" duration="6186000" />
       <workItem from="1549992516326" duration="17078000" />
+      <workItem from="1551290072899" duration="619000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48280000" />
+    <option name="totallyTimeSpent" value="48899000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1341" y="94" width="1580" height="800" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="aws.explorer" order="1" side_tool="true" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="3" weight="0.15429688" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.1542811" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -156,9 +172,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/error.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/error.log" />
     <entry file="file://$PROJECT_DIR$/vpc_flowlogs_assume_role.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -199,14 +213,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cloudwatch_build.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2969">
-          <caret line="658" column="23" lean-forward="true" selection-start-line="658" selection-start-column="23" selection-end-line="658" selection-end-column="23" />
-          <folding>
-            <element signature="e#1477#1488#0" expanded="true" />
-            <element signature="e#7801#8792#0" />
-            <element signature="e#10264#11252#0" />
-            <element signature="e#13398#14799#0" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="639" column="21" selection-start-line="639" selection-start-column="21" selection-end-line="639" selection-end-column="21" />
         </state>
       </provider>
     </entry>
